@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost/nodeauth');
 
 var db = mongoose.connection;
 
-// Referrer Schema
+// Referrer Schema new set
 var ReferrerSchema = mongoose.Schema({
 	referrer: {
 		type: String
