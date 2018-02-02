@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Members Area
+  p Welcome to the members area
+  br
+  h2 Your Referred Users
+  hr
+  div
+  table(border='1')
+   thead
+   tr
+        td.headerFont Referrel Id
+        td.headerFont User
+   tbody
+   for item in data.referrelId
+    tr
+      for subobject in item
+        td= subobject
