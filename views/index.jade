@@ -4,6 +4,18 @@ block content
   h1 Members Area
   p Welcome to the members area
   br
+  h2 Your Details
+  hr
+  table(border='1')
+    tr
+      td Name
+      td User Name
+    tr
+      td #{user.name}
+      td 
+       span #{user.username}
+  a(href="/users/updateUserData") Show More
+  br
   h2 Your Referred Users
   hr
   div
@@ -17,3 +29,4 @@ block content
     tr
       for subobject in item
         td= subobject
+

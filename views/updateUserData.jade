@@ -1,0 +1,111 @@
+extends layout
+
+block content
+ h1 Update user Data
+ if errors
+  each error, i in errors
+   div.alert.alert-danger #{error.msg}
+ span.page-header Please register using the form below
+ h2.page-header Individual
+ form(method='post', action='/users/updateUserData', enctype='multipart/form-data')
+  .form-group
+    label Name
+    input.form-control(name='name', type='text', placeholder='Enter Name', required='true', value='#{userData.name}')
+    .form-group
+    label Father's Name
+    input.form-control(name='fatherName', type='text', placeholder="Enter Father's Name", required='true', value='#{userData.fatherName}')
+    .form-group
+    label Mother's Name
+    input.form-control(name='motherName', type='text', placeholder="Enter Mother's Name", required='true', value='#{userData.motherName}')
+    .form-group
+    label School/College Name
+    input.form-control(name='institute', type='text', placeholder='Enter School/College Name' required='true', value='#{userData.institute}')
+  .row
+    .col-sm-6.col-sm-6
+     .form-group
+      label Class
+      input.form-control(name='class', type='text', placeholder='Enter Class' required='true', value='#{userData.class}')
+    .col-sm-6.col-sm-6
+     .form-group
+      label Group
+      select.form-control#group(name='group', type='text', placeholder='Select your Group', required='true')
+        option(value='science' selected=userData.group==='science'?true:false) Science
+        option(value='commerce'  selected=userData.group==='commerce'?true:false) Commerce
+        option(value='humanities'  selected=userData.group==='humanities'?true:false) Humanities
+        option(value='others'  selected=userData.group==='others'?true:false) Others
+  .row
+    .col-sm-6.col-sm-6
+     .form-group
+      label Date of Birth
+      #datepicker.input-group.date(data-date-format='mm-dd-yyyy')
+       input.form-control(type='text', readonly='', name='dateOfBirth' required='true')
+       span.input-group-addon
+        i.glyphicon.glyphicon-calendar
+    .col-sm-6.col-sm-6
+     .form-group
+      label Sex
+      select.form-control#sex(name='sex', type='text', placeholder='Select your Sex' required='true')
+        option(value='male', selected=userData.sex==='male'?true:false) Male
+        option(value='female', selected=userData.sex==='female'?true:false) Female
+  .row
+    .col-sm-6.col-sm-6
+      .form-group
+        label Mobile Number
+        input.form-control(name='mobile', type='text', placeholder='Enter Mobile Number', value='#{userData.mobile}')
+    .col-sm-6.col-sm-6
+      .form-group
+        label Phone
+        input.form-control(name='phone', type='text', placeholder='Enter Phone Number', value='#{userData.phone}')
+  .form-group
+    label Email
+    input.form-control(name='email', type='text', placeholder='Enter Email Address' required='true', value='#{userData.email}')
+  .form-group
+       label Profile Image
+       br
+       img(src='/' style='width:120px;height:150px;')
+       br
+       br
+       input.form-control(name='profileimage', type='file', value='#{userData.profileimage}')
+  h2.page-header Present Address
+  .form-group
+    label Address Line 1
+    input.form-control#prAddLine1(name='prAddLine1', type='text', placeholder='Enter Address Line 1' value='#{userData.presentAddress[0].addressLine.one}')
+  .form-group
+    label Address Line 2
+    input.form-control#prAddLine2(name='prAddLine2', type='text', placeholder='Enter Address Line 2' value='#{userData.presentAddress[0].addressLine.two}')
+  .form-group
+    label Country/Region
+    select.form-control(name='prCountryRegion' required='true')
+    each item in bar
+       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
+  .form-group
+    label District/Town
+    select.form-control(name='prDistTown' required='true')
+    each item in bar
+       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
+  h2.page-header Permanent Address
+  .form-group
+    label Address Line 1
+    input.form-control#prmAddLine1(name='prmAddLine1', type='text', placeholder='Enter Address Line 1' value='#{userData.permanentAddress[0].addressLine.one}')
+  .form-group
+    label Address Line 2
+    input.form-control#prmAddLine2(name='prmAddLine2', type='text', placeholder='Enter Address Line 2' value='#{userData.permanentAddress[0].addressLine.two}')
+  .form-group
+    label Country/Region
+    select.form-control(name='prmCountryRegion' required='true')
+    each item in bar
+       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
+  .form-group
+    label District/Town
+    select.form-control(name='prmDistTown' required='true')
+    each item in bar
+       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
+  input.btn.btn-primary(type='submit', name='submit', value='Register')
+    
+  span
+   hr
+  script.
+    $(document).ready(function(){
+    
+
+    });

@@ -8,9 +8,13 @@ block content
    div.alert.alert-danger #{error.msg}
  form(method='post', action='/users/login')
   .form-group
-   label Username
-   input.form-control(name='username', type='text', placeholder='Enter Username')
+   label User Id
+   input.form-control(name='username', type='text', placeholder='Enter User Id')
   .form-group
    label Password
    input.form-control(name='password', type='password', placeholder='Enter Password')
+  span
+   a(href='/users/forgot-password') Forgot password
+   br
+   br
   input.btn.btn-primary(type='submit', name='submit',value='Login')

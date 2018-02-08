@@ -5,7 +5,7 @@ var Referrer = require('../models/referrer');
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
   	Referrer.findOne({referrer:req.user.id}, function(err, fD) {
-     res.render('index',{data:fD});
+     res.render('index',{data:fD, user:req.user});
   });
   
 });

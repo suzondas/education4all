@@ -7,11 +7,12 @@ var db = mongoose.connection;
 
 // User Schema
 var UserSchema = mongoose.Schema({
+
+	//username is replaced with userID and mongodb's default ObjectId is not touched 
 	username: {
-		type: String,
-		index: true,
-		unique : true
+		type: String
 	},
+	unhashedPassword:{type:String},
 	password: {
 		type: String
 	},
@@ -25,8 +26,44 @@ var UserSchema = mongoose.Schema({
 		type:String,
 		unique : true
 	},
+	fatherName:{
+		type:String
+	},
+	motherName:{
+		type:String
+	},
+	institute:{
+		type:String
+	},
+	class:{
+		type:String
+	},
+	group:{
+		type:String
+	},
+	dateOfBirth:{
+		type:Date
+	},
+	sex:{
+		type:String
+	},
+	mobile:{
+		type:String
+	},
+	phone:{
+		type:String
+	},
+	presentAddress:{
+		type:Array,
+		default:{addressLine:{one:'',two:'',three:'',four:''},countryOrRegion:'',districtOrTown:''}
+	},
+	permanentAddress:{
+		type:Array,
+		default:{addressLine:{one:'',two:'',three:'',four:''},countryOrRegion:'',districtOrTown:''}
+	},
 	profileimage:{
-		type: String
+		type: String,
+		default:'noimage'
 	}
 });
 
