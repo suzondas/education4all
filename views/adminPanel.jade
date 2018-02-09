@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  style.
+   #mainContent{width:90%;}
+  h1 Search/Filter
+  table.table#dataTable.display(cellspacing='0', width='100%')
+   thead
+    tr
+      th Row No.
+      th Name
+      th Id
+      th Institution
+      th Region
+      th Branch
+      th Level
+      th Referrer
+      th Action
+   tfoot
+    tr
+      th Row No.
+      th Name
+      th Id
+      th Institution
+      th Region
+      th Branch
+      th Level
+      th Referrer
+      th Action
+   tbody
+    for item in usersData
+     tr
+      td --
+      td #{item.name}
+      td #{item.username}
+      td #{item.institution}
+      td #{item.presentAddress[0].countryOrRegion}
+      td #{item.presentAddress[0].districtOrTown}
+      td #{(item.referrer).split('-')[1]?Number((item.referrer).split('-')[1]):'Admin'}
+      td #{item.referrer}
+      td Details Remove
+  script.
+   $(document).ready(function() {
+   $('#dataTable').DataTable();
+   });
+

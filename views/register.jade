@@ -78,11 +78,17 @@ block content
     label Address Line 2
     input.form-control(name='prAddLine2', type='text', placeholder='Enter Address Line 2')
   .form-group
+    label Address Line 3
+    input.form-control(name='prAddLine3', type='text', placeholder='Enter Address Line 3')
+  .form-group
+    label Address Line 4
+    input.form-control(name='prAddLine4', type='text', placeholder='Enter Address Line 4')
+  .form-group
     label Country/Region
     select.form-control(id="region-cr" name='prCountryRegion' required='true'  onchange='changeBranchCR()')
       option(value='') -Select an item-
       each item in region
-         option(value=item.local data-branch-cr=item.branch) #{item.item}
+         option(value=item.item+'-'+item.local data-branch-cr=item.branch) #{item.item}
   .form-group
     label District/Town
     select.form-control(id="branch-cr" name='prDistTown' required='true')
@@ -94,11 +100,17 @@ block content
     label Address Line 2
     input.form-control(name='prmAddLine2', type='text', placeholder='Enter Address Line 2')
   .form-group
+    label Address Line 3
+    input.form-control(name='prmAddLine3', type='text', placeholder='Enter Address Line 3')
+  .form-group
+    label Address Line 4
+    input.form-control(name='prmAddLine4', type='text', placeholder='Enter Address Line 4')
+  .form-group
     label Country/Region
     select.form-control(id="region-opt" name='prmCountryRegion' required='true'   onchange='changeBranchOPT()')
       option(value='') -Select an item-
         each item in region
-           option(value=item.local data-branch-opt=item.branch) #{item.item}
+           option(value=item.item+'-'+item.local data-branch-opt=item.branch) #{item.item}
   .form-group
     label District/Town
     select.form-control(id="branch-opt" name='prmDistTown' required='true')

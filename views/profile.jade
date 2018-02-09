@@ -1,0 +1,88 @@
+extends layout
+
+block content
+  h1 Your Profile 
+  a(href="/users/updateUserData") Update
+  hr
+  table.table
+    tr
+      td Name
+      td 
+       span #{user.name}
+    tr
+      td User Name
+      td 
+       span #{user.username}
+    tr
+      td Photo
+      td 
+       span #{user.profileimage}
+    tr
+      td Father Name
+      td 
+       span #{user.fatherName}
+    tr
+      td Mother Name
+      td 
+       span #{user.motherName}
+    tr
+      td Date of Birth
+      td 
+       span #{user.dateOfBirth}
+    tr
+      td Sex
+      td 
+       span #{user.sex}
+    tr
+      td email
+      td 
+       span #{user.username}
+    tr
+      td Mobile
+      td 
+       span #{user.mobile}
+    tr
+      td Institution
+      td 
+       span #{user.institution}
+    tr
+      td Class
+      td 
+       span #{user.class}
+    tr
+      td Group
+      td 
+       span #{user.group}
+    tr
+      td Mobile
+      td 
+       span #{user.mobile}
+    tr
+      td Present Address
+      td 
+       span Address Line1: #{user.presentAddress[0].addressLine.one}
+       br
+       span Address Line1: #{user.presentAddress[0].addressLine.two}
+       br
+       span Address Line1: #{user.presentAddress[0].addressLine.three}
+       br
+       span Address Line1: #{user.presentAddress[0].addressLine.four}
+       br
+       span Address Line1: #{user.presentAddress[0].countryOrRegion}
+       br
+       span Address Line1: #{user.presentAddress[0].districtOrTown}
+    tr
+      td Permanent Address
+      td 
+       span Address Line1: #{user.permanentAddress[0].addressLine.one}
+       br
+       span Address Line1: #{user.permanentAddress[0].addressLine.two}
+       br
+       span Address Line1: #{user.permanentAddress[0].addressLine.three}
+       br
+       span Address Line1: #{user.permanentAddress[0].addressLine.four}
+       br
+       span Address Line1: #{user.permanentAddress[0].countryOrRegion}
+       br
+       span Address Line1: #{user.permanentAddress[0].districtOrTown}
+       

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Your Referred Members
+  hr
+  div
+  table.table
+   thead
+   tr
+        td.headerFont Referrel Id
+        td.headerFont User
+   tbody
+   for item in data.referrelId
+    tr
+      for subobject in item
+        td= subobject

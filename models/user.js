@@ -9,6 +9,7 @@ var db = mongoose.connection;
 var UserSchema = mongoose.Schema({
 
 	//username is replaced with userID and mongodb's default ObjectId is not touched 
+	admin:{type:Boolean,default:false},
 	username: {
 		type: String
 	},

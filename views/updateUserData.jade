@@ -74,15 +74,17 @@ block content
     label Address Line 2
     input.form-control#prAddLine2(name='prAddLine2', type='text', placeholder='Enter Address Line 2' value='#{userData.presentAddress[0].addressLine.two}')
   .form-group
+    label Address Line 3
+    input.form-control#prAddLine3(name='prAddLine3', type='text', placeholder='Enter Address Line 3' value='#{userData.presentAddress[0].addressLine.three}')
+  .form-group
+    label Address Line 4
+    input.form-control#prAddLine4(name='prAddLine4', type='text', placeholder='Enter Address Line 4' value='#{userData.presentAddress[0].addressLine.four}')
+  .form-group
     label Country/Region
     select.form-control(name='prCountryRegion' required='true')
-    each item in bar
-       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
   .form-group
     label District/Town
     select.form-control(name='prDistTown' required='true')
-    each item in bar
-       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
   h2.page-header Permanent Address
   .form-group
     label Address Line 1
@@ -91,17 +93,17 @@ block content
     label Address Line 2
     input.form-control#prmAddLine2(name='prmAddLine2', type='text', placeholder='Enter Address Line 2' value='#{userData.permanentAddress[0].addressLine.two}')
   .form-group
+    label Address Line 3
+    input.form-control#prmAddLine3(name='prmAddLine3', type='text', placeholder='Enter Address Line 3' value='#{userData.permanentAddress[0].addressLine.three}')
+  .form-group
+    label Address Line 4
+    input.form-control#prmAddLine4(name='prmAddLine4', type='text', placeholder='Enter Address Line 4' value='#{userData.permanentAddress[0].addressLine.four}')
+  .form-group
     label Country/Region
     select.form-control(name='prmCountryRegion' required='true')
-    each item in bar
-       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
   .form-group
     label District/Town
     select.form-control(name='prmDistTown' required='true')
-    each item in bar
-       option(value=item.subItem selected=item.subItem===matchItem?true:false) #{item.subItem}
-  input.btn.btn-primary(type='submit', name='submit', value='Register')
-    
   span
    hr
   script.

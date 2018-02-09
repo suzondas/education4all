@@ -21,7 +21,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 //Unique GUID Start
-var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var ALPHABET = '0123456789abcdefghjklmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ!@#$%&?';
 
 var ID_LENGTH = 8;
 
@@ -53,7 +53,7 @@ var generateUniqueUserId = function(previous, region, city) {
     var customId = (new Date()).getFullYear() + region + city + id;
     return customId;
 };
-var generateUnique = function(previous) {
+var generateUnique = function(level, previous) {
     previous = previous || [];
     var retries = 0;
     var id;
@@ -68,9 +68,26 @@ var generateUnique = function(previous) {
         }
     }
 
-    return id;
+    if(level==='admin') {
+        return id+'-1'
+    }
+    else {
+        var addedLevel = Number(level.substr(level.indexOf('-')+1))+1;
+        return id+'-'+addedLevel;
+    }
 };
 //Unique GUID End
+
+/*Extracting Location Name and Local*/
+function extractLocation(q, param){
+
+    if(q==='name'){
+        return param.substr(0, param.indexOf("-"));
+    }
+    if(q==='local'){
+        return param.substr(param.indexOf("-") + 1);
+    }
+}
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -91,6 +108,32 @@ router.get('/login', function(req, res, next) {
     res.render('login', {
         title: 'Login'
     });
+});
+
+router.get('/profile', ensureAuthenticated, function(req,res, next){
+    res.render('profile',{user:req.user});
+});
+router.get('/referredMembers', ensureAuthenticated, function(req,res, next){
+    Referrer.findOne({referrer:req.user.id}, function(err, fD) {
+        if (err) throw err;
+        res.render('referredMembers',{data:fD, user:req.user});
+    });
+});
+
+router.get('/adminPanel', ensureAuthenticated, function(req,res, next){
+
+    if(!req.user.admin) {
+        res.redirect('/');
+    }
+
+    Referrer.find({}, function(err, referrerData) {
+        if (err) throw err;
+        User.find({},function(err,usersData){
+             if (err) throw err;
+             res.render('adminPanel',{referrerData:referrerData, usersData:usersData});
+        });
+    });
+
 });
 
 router.get('/updateUserData', ensureAuthenticated, function(req, res, next) {
@@ -177,6 +220,7 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+//
 passport.use(new LocalStrategy(function(username, password, done) {
     User.getUserByUsername(username, function(err, user) {
         if (err) throw err;
@@ -212,7 +256,7 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
     recaptcha.validateRequest(req)
         .then(function() {
             // validated and secure
-          var name = req.body.name;
+    var name = req.body.name;
     var email = req.body.email;
     var referrer = req.body.referrer;
 
@@ -232,15 +276,20 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
     var phone = req.body.phone;
     var prAddLine1 = req.body.prAddLine1;
     var prAddLine2 = req.body.prAddLine2;
+    var prAddLine3 = req.body.prAddLine3;
+    var prAddLine4 = req.body.prAddLine4;
     var prCountryRegion = req.body.prCountryRegion;
     var prDistTown = req.body.prDistTown;
     var prmAddLine1 = req.body.prmAddLine1;
     var prmAddLine2 = req.body.prmAddLine2;
+    var prmAddLine3 = req.body.prmAddLine3;
+    var prmAddLine4 = req.body.prmAddLine4;
     var prmCountryRegion = req.body.prmCountryRegion;
     var prmDistTown = req.body.prmDistTown;
-    var userId = generateUniqueUserId('', prCountryRegion, prDistTown);
+    var userId = generateUniqueUserId('', extractLocation('local', prCountryRegion), extractLocation('local',prDistTown));
     /*Middleware for Adding New User*/
     var newUser = new User({
+        admin:false,
         username: userId,
         name: name,
         email: email,
@@ -260,20 +309,20 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
         phone: phone,
         presentAddress: {
             addressLine: {
-                1: prAddLine1,
-                2: prAddLine2,
-                3: '',
-                4: ''
+                one: prAddLine1,
+                two: prAddLine2,
+                three: prAddLine3,
+                four: prAddLine4
             },
             countryOrRegion: prCountryRegion,
             districtOrTown: prDistTown
         },
         permanentAddress: {
             addressLine: {
-                1: prmAddLine1,
-                2: prmAddLine2,
-                3: '',
-                4: ''
+                one: prmAddLine1,
+                two: prmAddLine2,
+                three: prmAddLine3,
+                four: prmAddLine4
             },
             countryOrRegion: prmCountryRegion,
             districtOrTown: prmDistTown
@@ -321,6 +370,7 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
         });
     } else {
         if (referrer === '!Wis#@KDz3E') {
+            newUser.admin=true;
             User.createUser(newUser, function(err, user) {
                 if (err) throw err;
                 //console.log(user);
@@ -328,7 +378,7 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
                     var referrelId = [];
                     for (var i = 0; i < 5; i++) {
                         referrelId.push({
-                            id: generateUnique(),
+                            id: generateUnique('admin'),
                             user: ''
                         });
                     }
@@ -368,7 +418,7 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
                                         var referrelId = [];
                                         for (var i = 0; i < 5; i++) {
                                             referrelId.push({
-                                                id: generateUnique(),
+                                                id: generateUnique(referrer),
                                                 user: ''
                                             });
                                         }
@@ -448,6 +498,7 @@ router.post('/register', upload.single('profileimage'), function(req, res, next)
         })
         .catch(function(errorCodes) {
             // invalid
+            console.log(errorCodes)
              req.flash('error', 'Invalid reCAPTCHA');
                     res.redirect('/users/register');
         });

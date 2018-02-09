@@ -21,7 +21,7 @@ function changeBranchCR(){
 	if(branches){
 	branches = JSON.parse(branches);
 		for(var i=0;i<branches.length;i++){
-			$("#branch-cr").append('<option value="'+branches[i].local+'">'+branches[i].item.toUpperCase()+'</option>');
+			$("#branch-cr").append('<option value="'+branches[i].item+'-'+branches[i].local+'">'+branches[i].item.toUpperCase()+'</option>');
 		}
 	}
 }
@@ -32,7 +32,7 @@ function changeBranchOPT(){
 	if(branches){
 	branches = JSON.parse(branches);
 		for(var i=0;i<branches.length;i++){
-			$("#branch-opt").append('<option value="'+branches[i].local+'">'+branches[i].item.toUpperCase()+'</option>');
+			$("#branch-opt").append('<option value="'+branches[i].item+'-'+branches[i].local+'">'+branches[i].item.toUpperCase()+'</option>');
 		}
 	}
 }
