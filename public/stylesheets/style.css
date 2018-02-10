@@ -20,15 +20,57 @@ ul.error li{
     list-style: none;
 }
 .headerFont{color:blue;}
+
+/*Container*/
 #mainContent{
     width: 50%;
         padding-top: 15px;
         padding-bottom: 15px;
     box-shadow: 0px 0px 13px 0px grey;
 }
-/*Top bar*/
+
+/*Layout Top bar*/
 .navbar-brand{font-weight: bold;}
 .navbar-nav li:hover{
     background: gainsboro;
     font-weight: bold;
 }
+
+/*Admin Panel Search Form*/
+#searchForm input[type="checkbox"]{
+    margin-left:15px;
+}
+
+/*Datatable Config*/
+#dataTable_paginate{text-align: right;}
+#dataTable_filter{display: none;}
+
+/*Admin Panel TAB*/
+
+        ul.tabs{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        ul.tabs li{
+            background: none;
+            color: #222;
+            display: inline-block;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        ul.tabs li.current{
+            background: #ededed;
+            color: #222;
+        }
+
+        .tab-content{
+            display: none;
+            background: #ededed;
+            padding: 15px;
+        }
+
+        .tab-content.current{
+            display: inherit;
+        }

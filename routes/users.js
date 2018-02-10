@@ -130,7 +130,10 @@ router.get('/adminPanel', ensureAuthenticated, function(req,res, next){
         if (err) throw err;
         User.find({},function(err,usersData){
              if (err) throw err;
-             res.render('adminPanel',{referrerData:referrerData, usersData:usersData});
+             Region.find({},function(err, region){
+                if (err) throw err;
+                res.render('adminPanel',{referrerData:referrerData, usersData:usersData, region:region});
+             })
         });
     });
 

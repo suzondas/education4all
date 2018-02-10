@@ -3,25 +3,101 @@ extends layout
 block content
   style.
    #mainContent{width:90%;}
-  h1 Search/Filter
+  input(type='button' class='btn btn-default' value='Filter')
+  hr
+  br
+  br
+  -function prettyDate(dateString){
+    -var date = new Date(dateString);
+    -var d = date.getDate();
+    -var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+    -var m = date.getMonth()+1;
+    -var y = date.getFullYear();
+    -return d+'-'+m+'-'+y;
+  -}
+  div#searchForm(align='center')
+   input.form-group#searchByIdLabel(type='radio' name='searchType' value='individual' checked="checked") 
+   label(for='searchByIdLabel') 
+    strong Individual
+   br
+   span ID Number 
+   input#searchById(type='text' placeholder='Search by ID...')
+   br
+   span --------------------------------------
+   br
+   input.form-group#searchByGroupLabel(type='radio' name='searchType' value='group') 
+   label(for='searchByGroupLabel') 
+    strong Group Search
+   br
+   input#searchByInstitutionChk(type='checkbox')
+   span Institution: 
+   input#searchByInstitution(type='text', placeholder='Type Institution')
+   input#searchByClassChk(type='checkbox')
+   span Class: 
+   input#searchByClass(type='text', placeholder='Type Class')
+   input#searchByGroupChk(type='checkbox') 
+   span Group: 
+   select#searchByGroup
+    option(value='science') Science
+    option(value='commerce') Commerece
+    option(value='humanities') Humanities
+   br
+   input#searchByRegionChk(type='checkbox') 
+   span Region: 
+   select(id="region-cr" name='prCountryRegion' required='true'  onchange='changeBranchCR()')
+      option(value='') -Select an item-
+      each item in region
+         option(value=item.item+'-'+item.local data-branch-cr=item.branch) #{item.item}
+   input#searchByBranchChk(type='checkbox') 
+   span Branch: 
+   select(id="branch-cr" name='prDistTown' required='true')
+    option(value='') -Select an item-
+   br
+   input#searchByLevelChk(type='checkbox') 
+   span Level: 
+   select#searchByLevel
+    option(value='') -Select Level-
+    option(value='1') 1
+    option(value='2') 2
+    option(value='3') 3
+    option(value='4') 4
+    option(value='5') 5
+    option(value='6') 6
+    option(value='7') 7
+    option(value='8') 8
+    option(value='9') 9
+    option(value='10') 10
+    option(value='admin') Admin
+   input#searchByReferrelCodeChk(type='checkbox') 
+   span Referrel Code: 
+   input#searchByReferrelCode(type='text', placeholder='Type Referrel Code')
+   br
+   input#searchByDOBChk(type='checkbox') 
+   span Date of Birth: 
+   #datepicker.input-group.date(style='width:150px;' data-date-format='dd-m-yyyy')
+          input#dateOfBirth.form-control(type='text', readonly='', name='dateOfBirth' required='true')
+          span.input-group-addon
+           i.glyphicon.glyphicon-calendar
+   input#searchBySexChk(type='checkbox') 
+   span Sex: 
+   select#searchBySex
+    option(value='male') Male
+    option(value='female') Female
+   br
+   br
+   input#filter(type='button' class="btn btn-success" value="Filter")
+   br
   table.table#dataTable.display(cellspacing='0', width='100%')
    thead
     tr
       th Row No.
       th Name
       th Id
+      th Date of Birth
+      th Sex
       th Institution
-      th Region
-      th Branch
-      th Level
-      th Referrer
-      th Action
-   tfoot
-    tr
-      th Row No.
-      th Name
-      th Id
-      th Institution
+      th Class
+      th Group
       th Region
       th Branch
       th Level
@@ -33,14 +109,44 @@ block content
       td --
       td #{item.name}
       td #{item.username}
-      td #{item.institution}
+      td #{prettyDate(item.dateOfBirth)}
+      td #{item.sex}
+      td #{item.institute}
+      td #{item.class}
+      td #{item.group}
       td #{item.presentAddress[0].countryOrRegion}
       td #{item.presentAddress[0].districtOrTown}
       td #{(item.referrer).split('-')[1]?Number((item.referrer).split('-')[1]):'Admin'}
       td #{item.referrer}
-      td Details Remove
+      td 
+       a(href='#openDetails') Details 
+       a(href='/removeUser') Remove 
   script.
    $(document).ready(function() {
-   $('#dataTable').DataTable();
+   var table =  $('#dataTable').DataTable();
+   $('#filter').on('click',function(){
+   
+   
+   var searchType = $('input[name=searchType]:checked').val();
+   if(searchType==='individual'){
+   	table.columns( 2 ).search( $("#searchById").val() ).draw();
+   }
+   else{
+   console.log('mad')
+   console.log($("#searchByReferrelCode").val())
+   console.log($("#searchByInstitution").val())
+   	table
+   	.column( 3 ).search($('#searchByDOBChk').is(":checked")?$("#dateOfBirth").val():'')
+   	.column( 4 ).search($('#searchBySexChk').is(":checked")?$("#searchBySex").val():'')
+   	.column( 5 ).search($('#searchByInstitutionChk').is(":checked")?$("#searchByInstitution").val():'')
+   	.column( 6 ).search($('#searchByClassChk').is(":checked")?$("#searchByClass").val():'')
+   	.column( 7 ).search($('#searchByGroupChk').is(":checked")?$("#searchByGroup").val():'')
+   	.column( 8 ).search($('#searchByRegionChk').is(":checked")?$("#region-cr").val():'')
+   	.column( 9 ).search($('#searchByBranchChk').is(":checked")?$("#branch-cr").val():'')
+   	.column( 10 ).search($('#searchByLevelChk').is(":checked")?$("#searchByLevel").val():'')
+   	.column( 11 ).search($('#searchByReferrelCodeChk').is(":checked")?$("#searchByReferrelCode").val():'')
+   	.draw();
+   	}
+   })
    });
 
