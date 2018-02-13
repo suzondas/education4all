@@ -1,9 +1,15 @@
 extends layout
 
 block content
+  - String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  - }
   h1 Your Referred Members
   hr
   div
+  button.btn.no-border-rad#firstLevelWindow(type='button') First Level
+  &nbsp;
+  button.btn.btn-default.no-border-rad#secondLevelWindow(type='button') Second Level
   table.table
    thead
    tr
@@ -12,5 +18,37 @@ block content
    tbody
    for item in data.referrelId
     tr
-      for subobject in item
-        td= subobject
+      each val,index in item
+        if (index==='user')
+         - for (var i=0;i<firstLevelUser.length;i++)
+           if((firstLevelUser[i]._id).toString()===val.toString())
+            td 
+             strong #{(firstLevelUser[i].name).toUpperCase()}
+             br
+             span #{firstLevelUser[i].presentAddress[0].countryOrRegion}, #{firstLevelUser[i].presentAddress[0].districtOrTown}
+              - for(var i=0;i<secondLevelReferrelCode.length;i++){
+                  if((firstLevelUser[i]._id).toString()===(secondLevelReferrelCode[i].referrer).toString())
+                  table.table.secondLevelUserTable(style="display:none;")
+                   thead
+                   tr
+                      td.headerFont Referrel Id
+                      td.headerFont User
+                   tbody
+                   for eachItem in secondLevelReferrelCode[i].referrelId
+                    tr
+                     each val, index in eachItem
+                      td #{val}
+              - }
+        else
+          td=val
+  script.
+   $("#firstLevelWindow").on('click',function(){
+   $("#firstLevelWindow").addClass('btn-default');
+   $("#secondLevelWindow").removeClass('btn-default');
+   $('.secondLevelUserTable').hide();
+   });
+    $("#secondLevelWindow").on('click',function(){
+   $("#secondLevelWindow").addClass('btn-default');
+   $("#firstLevelWindow").removeClass('btn-default');
+   $('.secondLevelUserTable').show();
+   })

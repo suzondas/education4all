@@ -21,3 +21,16 @@
 		Referrer.findById(id, callback);
 	}
 
+	module.exports.getReferrersByIds = function(ids, callback){
+
+	var objectIDS = [];
+	// ids.forEach(function(item){
+	// 	objectIDS.push(mongoose.Types.ObjectId(item))
+	// })
+	Referrer.find({
+	    'referrer': { $in: ids}
+	},callback);
+
+	}
+
+

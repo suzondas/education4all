@@ -73,6 +73,17 @@ var User = module.exports = mongoose.model('User', UserSchema);
 module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
+module.exports.getUsersByIds = function(ids, callback){
+
+	var objectIDS = [];
+	ids.forEach(function(item){
+		objectIDS.push(mongoose.Types.ObjectId(item))
+	})
+	User.find({
+	    '_id': { $in: objectIDS}
+	},callback);
+
+}
 
 module.exports.getUserByUsername = function(username, callback){
 	var query = {username: username};

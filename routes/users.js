@@ -116,7 +116,35 @@ router.get('/profile', ensureAuthenticated, function(req,res, next){
 router.get('/referredMembers', ensureAuthenticated, function(req,res, next){
     Referrer.findOne({referrer:req.user.id}, function(err, fD) {
         if (err) throw err;
-        res.render('referredMembers',{data:fD, user:req.user});
+
+        var userIds  = [];
+        fD.referrelId.forEach(function(item){
+            if(item.user){
+                userIds.push(item.user)
+            }
+        })
+        User.getUsersByIds(userIds,function(err, firstLevelUser){
+            if (err) throw err;
+
+            Referrer.getReferrersByIds(userIds,function(err, secondLevelReferrelCode){
+            if (err) throw err;
+
+            var secondLevelUserIds = [];
+                secondLevelReferrelCode.forEach(function(item){
+                    item.referrelId.forEach(function(subItem){
+                        if(subItem.user){
+                            secondLevelUserIds.push(item.user)
+                        }
+                    })
+                });
+                User.getUsersByIds(secondLevelUserIds,function(err, secondLevelusersDetails){
+                    if (err) throw err;
+                    res.render('referredMembers',{data:fD, user:req.user, firstLevelUser:firstLevelUser,secondLevelReferrelCode:secondLevelReferrelCode, secondLevelusersDetails:secondLevelusersDetails});
+                });
+            });
+        })
+
+        // res.render('referredMembers',{data:fD, user:req.user});
     });
 });
 

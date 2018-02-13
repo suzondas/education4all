@@ -74,3 +74,6 @@ ul.error li{
         .tab-content.current{
             display: inherit;
         }
+.no-border-rad{
+    border-radius: 0px;
+}
