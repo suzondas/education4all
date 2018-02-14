@@ -132,7 +132,7 @@ router.get('/referredMembers', ensureAuthenticated, function(req,res, next){
                 secondLevelReferrelCode.forEach(function(item){
                     item.referrelId.forEach(function(subItem){
                         if(subItem.user){
-                            secondLevelUserIds.push(item.user)
+                            secondLevelUserIds.push(subItem.user)
                         }
                     })
                 });

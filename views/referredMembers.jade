@@ -36,19 +36,28 @@ block content
                    tbody
                    for eachItem in secondLevelReferrelCode[i].referrelId
                     tr
-                     each val, index in eachItem
-                      td #{val}
+                     each newVal, newIndex in eachItem
+                      if (newIndex==='user')
+                       - for (var i=0;i<secondLevelusersDetails.length;i++){
+                         if((secondLevelusersDetails[i]._id).toString()===newVal.toString())
+                          td 
+                           strong #{(secondLevelusersDetails[i].name).toUpperCase()}
+                           br
+                           span #{secondLevelusersDetails[i].presentAddress[0].countryOrRegion}, #{secondLevelusersDetails[i].presentAddress[0].districtOrTown}
+                       - }
+                      else
+                       td=newVal
               - }
         else
           td=val
   script.
    $("#firstLevelWindow").on('click',function(){
-   $("#firstLevelWindow").addClass('btn-default');
-   $("#secondLevelWindow").removeClass('btn-default');
+   $("#firstLevelWindow").removeClass('btn-default');
+   $("#secondLevelWindow").addClass('btn-default');
    $('.secondLevelUserTable').hide();
    });
     $("#secondLevelWindow").on('click',function(){
-   $("#secondLevelWindow").addClass('btn-default');
-   $("#firstLevelWindow").removeClass('btn-default');
+   $("#secondLevelWindow").removeClass('btn-default');
+   $("#firstLevelWindow").addClass('btn-default');
    $('.secondLevelUserTable').show();
    })

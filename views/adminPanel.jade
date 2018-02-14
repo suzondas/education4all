@@ -119,8 +119,7 @@ block content
       td #{(item.referrer).split('-')[1]?Number((item.referrer).split('-')[1]):'Admin'}
       td #{item.referrer}
       td 
-       a(href='#openDetails') Details 
-       a(href='/removeUser') Remove 
+       a(href='/removeUser/'+item.id) Remove 
   script.
    $(document).ready(function() {
    var table =  $('#dataTable').DataTable();
