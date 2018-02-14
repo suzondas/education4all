@@ -1,0 +1,101 @@
+extends layout
+
+block content
+ h2.page-header Contacts
+ button.btn.no-border-rad#firstLevelWindow(type='button') First Level
+ &nbsp;
+ button.btn.btn-default.no-border-rad#secondLevelWindow(type='button') Second Level
+ br
+ br
+ div#firstLevelUser
+  h4(style="color:blue;") First Level Contacts
+  hr
+  each item in firstLevelUser
+   .chip
+     img(src='https://cdn1.iconfinder.com/data/icons/flat-business-icons/128/user-128.png', width='96', height='96' class="blueBorder")
+     span #{item.name}
+     span(onclick="" class="glyphicon glyphicon-comment chatBtn")
+ div#secondLevelUser(style="display:none;")
+  h4(style="color:purple;") Second Level Contacts
+  hr
+  each item in secondLevelusersDetails
+   .chip
+     img(src='https://cdn1.iconfinder.com/data/icons/flat-business-icons/128/user-128.png', width='96', height='96' class="purpleBorder")
+     span #{item.name}
+     span(onclick="" class="glyphicon glyphicon-comment chatBtn")  
+ br
+ br
+ br
+ h4 Chat with Users
+ hr
+ .container
+  .row
+    .col-md-5(style="padding-left:0px;")
+      .panel.panel-primary
+        .panel-heading
+          span.glyphicon.glyphicon-comment
+          |  Chat 
+        .panel-body
+          ul.chat
+            li.left.clearfix
+              span.chat-img.pull-left
+                img.img-circle(src='http://placehold.it/50/55C1E7/fff&text=U', alt='User Avatar')
+              .chat-body.clearfix
+                .header
+                  strong.primary-font Jack Sparrow
+                  small.pull-right.text-muted
+                    span.glyphicon.glyphicon-time
+                    | 12 mins ago
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+            li.right.clearfix
+              span.chat-img.pull-right
+                img.img-circle(src='http://placehold.it/50/FA6F57/fff&text=ME', alt='User Avatar')
+              .chat-body.clearfix
+                .header
+                  small.text-muted
+                    span.glyphicon.glyphicon-time
+                    | 13 mins ago
+                  strong.pull-right.primary-font Bhaumik Patel
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+            li.left.clearfix
+              span.chat-img.pull-left
+                img.img-circle(src='http://placehold.it/50/55C1E7/fff&text=U', alt='User Avatar')
+              .chat-body.clearfix
+                .header
+                  strong.primary-font Jack Sparrow
+                  small.pull-right.text-muted
+                    span.glyphicon.glyphicon-time
+                    | 14 mins ago
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+            li.right.clearfix
+              span.chat-img.pull-right
+                img.img-circle(src='http://placehold.it/50/FA6F57/fff&text=ME', alt='User Avatar')
+              .chat-body.clearfix
+                .header
+                  small.text-muted
+                    span.glyphicon.glyphicon-time
+                    | 15 mins ago
+                  strong.pull-right.primary-font Bhaumik Patel
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+        .panel-footer
+          .input-group
+            input#btn-input.form-control.input-sm(type='text', placeholder='Type your message here...')
+            span.input-group-btn
+              button#btn-chat.btn.btn-warning.btn-sm  Send
+ script.
+   $("#firstLevelWindow").on('click',function(){
+   $("#firstLevelWindow").removeClass('btn-default');
+   $("#secondLevelWindow").addClass('btn-default');
+   $('#firstLevelUser').show();
+   $('#secondLevelUser').hide();
+   });
+    $("#secondLevelWindow").on('click',function(){
+   $("#secondLevelWindow").removeClass('btn-default');
+   $("#firstLevelWindow").addClass('btn-default');
+   $('#firstLevelUser').hide();
+   $('#secondLevelUser').show();
+   })

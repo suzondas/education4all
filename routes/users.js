@@ -171,8 +171,51 @@ router.get('/updateUserData', ensureAuthenticated, function(req, res, next) {
         userData: req.user
     });
 });
+router.get('/removeUser/:userId', ensureAuthenticated, function(req, res, next) {
+    console.log(req.params.userId);
+    User.findByIdAndRemove(req.params.userId,function(err, data){
+        if (err) throw err;
+        
+        req.flash('success','User has been successfully removed')
+        res.redirect('/users/adminPanel');
+    });
+});
 router.get('/profileJSON', ensureAuthenticated, function(req, res, next) {
     res.send(req.user)
+});
+router.get('/contacts', ensureAuthenticated, function(req, res, next) {
+   Referrer.findOne({referrer:req.user.id}, function(err, fD) {
+        if (err) throw err;
+
+        var userIds  = [];
+        fD.referrelId.forEach(function(item){
+            if(item.user){
+                userIds.push(item.user)
+            }
+        })
+        User.getUsersByIds(userIds,function(err, firstLevelUser){
+            if (err) throw err;
+
+            Referrer.getReferrersByIds(userIds,function(err, secondLevelReferrelCode){
+            if (err) throw err;
+
+            var secondLevelUserIds = [];
+                secondLevelReferrelCode.forEach(function(item){
+                    item.referrelId.forEach(function(subItem){
+                        if(subItem.user){
+                            secondLevelUserIds.push(subItem.user)
+                        }
+                    })
+                });
+                User.getUsersByIds(secondLevelUserIds,function(err, secondLevelusersDetails){
+                    if (err) throw err;
+                    res.render('contacts',{data:fD, user:req.user, firstLevelUser:firstLevelUser,secondLevelReferrelCode:secondLevelReferrelCode, secondLevelusersDetails:secondLevelusersDetails});
+                });
+            });
+        })
+
+        // res.render('referredMembers',{data:fD, user:req.user});
+    });
 });
 router.get('/forgot-password', function(req, res, next) {
     res.render('forgot-password', {

@@ -77,3 +77,46 @@ ul.error li{
 .no-border-rad{
     border-radius: 0px;
 }
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px;
+    border-radius: 13px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+    float: left;
+    margin: 0 5px 0 -25px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.chatBtn {
+    margin-left:5px;
+    padding: 5px;
+    color: #888;
+    font-weight: bold;
+    float: right;
+    font-size: 15px;
+    cursor: pointer;
+}
+.purpleBorder{
+     border:2px solid purple;
+}.blueBorder{
+     border:2px solid blue;
+}
+
+.chatBtn:hover {
+    color: green;
+}
+.chat { list-style: none; margin: 0; padding: 0; } 
+.chat li { margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dotted #B3A9A9; } 
+.chat li.left .chat-body { margin-left: 60px; } .chat li.right .chat-body {  margin-right: 60px; } 
+.chat li .chat-body p { margin: 0; color: #777777; } .panel .slidedown .glyphicon, 
+.chat .glyphicon { margin-right: 5px; }
+.panel-body { overflow-y: scroll; height: 250px; } 
+/*::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: #F5F5F5; } ::-webkit-scrollbar { width: 12px; background-color: #F5F5F5; } ::-webkit-scrollbar-thumb { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); background-color: #555; }*/
