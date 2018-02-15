@@ -2,7 +2,7 @@ extends layout
 
 block content
   style.
-   #mainContent{width:90%;}
+   #mainContent{width:100%;}
   input(type='button' class='btn btn-default' value='Filter')
   hr
   br
@@ -109,6 +109,18 @@ block content
     option(value="49") 49
     option(value="50") 50
     option(value='admin') Admin
+   input#searchByReferrelCodeUsedChk(type='checkbox') 
+   span Referrel Code Used: 
+   &nbsp;
+   select#searchByReferrelCodeUsed
+    option(value='0') 0
+    option(value='1') 1
+    option(value='2') 2
+    option(value='3') 3
+    option(value='4') 4
+    option(value='5') 5
+   &nbsp;
+   &nbsp;
    input#searchByReferrelCodeChk(type='checkbox') 
    span Referrel Code: 
    input#searchByReferrelCode(type='text', placeholder='Type Referrel Code')
@@ -142,7 +154,8 @@ block content
       th Region
       th Branch
       th Level
-      th Referrer
+      th Referrer Code
+      th Referrel Code Used
       th Action
    tbody
     each item, index in usersData
@@ -159,6 +172,16 @@ block content
       td #{item.presentAddress[0].districtOrTown}
       td #{(item.referrer).split('-')[1]?Number((item.referrer).split('-')[1]):'Admin'}
       td #{item.referrer}
+      each refItem in referrerData
+       - if ((refItem.referrer).toString()===(item._id).toString()){
+       - var countReferrelIdUsed= 0
+       - for(var i = 0; i<refItem.referrelId.length;i++){
+       - if (refItem.referrelId[i].user){
+       - countReferrelIdUsed = countReferrelIdUsed+1
+       - }
+       - }
+       td=countReferrelIdUsed
+       - }
       td 
        - if(!item.admin)
         a(href='/users/removeUser/'+item.id) Remove 
@@ -186,7 +209,8 @@ block content
    	.column( 7 ).search($('#searchByGroupChk').is(":checked")?$("#searchByGroup").val():'')
    	.column( 8 ).search($('#searchByRegionChk').is(":checked")?$("#region-cr").val():'')
    	.column( 9 ).search($('#searchByBranchChk').is(":checked")?$("#branch-cr").val():'')
-   	.column( 10 ).search($('#searchByLevelChk').is(":checked")?$("#searchByLevel").val():'')
+    .column( 10 ).search($('#searchByLevelChk').is(":checked")?$("#searchByLevel").val():'')
+   	.column( 12 ).search($('#searchByReferrelCodeUsedChk').is(":checked")?$("#searchByReferrelCodeUsed").val():'')
    	.column( 11 ).search($('#searchByReferrelCodeChk').is(":checked")?$("#searchByReferrelCode").val():'')
    	.draw();
    	}
